@@ -61,27 +61,11 @@ code {
 .chat {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 60%;
+  height: 70vh;
   border-left: 1px solid #d1dbe3;
   border-right: 1px solid #d1dbe3;
 }
 
-.chat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f6fbff;
-  font-size: 1em;
-  border: solid #d1dbe3;
-  border-width: 0 0 1px;
-  padding: 0.9em 0.9em;
-}
-
-.chat-header span {
-  font-weight: 700;
-  color: rgba(0, 0, 0, 0.87);
-}
 
 .chat-message-list {
   display: flex;
@@ -158,3 +142,4 @@ code {
   color: rgba(0,0,0,.87);
   font-size: 15px;
 }
+
