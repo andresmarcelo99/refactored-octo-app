@@ -1,28 +1,38 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 
-
 @Injectable()
 export class AuthService {
-    constructor(
-        private usersService: UsersService,
-        private jwtService: JwtService
-      ) {}
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
-  async signIn(email: string, password: string): Promise<{access_token:string}> {
-    const user = await this.usersService.findByEmail(email);
-    
-    if (user == null) {
-        throw new NotFoundException()
+  async signIn(
+    email: string,
+    password: string,
+  ): Promise<{ access_token: string }> {
+    if (!email || !password) {
+      throw new BadRequestException('Email and password are required');
     }
-    const salt = await bcrypt.genSalt();
-    const hash = await bcrypt.hash(password, salt);
-    const is_match = await bcrypt.compare(password, hash);
+
+    const user = await this.usersService.findByEmail(email);
+
+    if (user == null) {
+      throw new NotFoundException("Credentials don't match records");
+    }
+
+    const is_match = await bcrypt.compare(password, user.password);
 
     if (!is_match) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException("Credentials don't match records");
     }
 
     const payload = { sub: user.id, username: user.username };

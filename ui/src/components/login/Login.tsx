@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-export function Login({ onLogin }:any) {
-  const [inputValue, setInputValue] = useState("");
+export function Login({ onLogin }: any) {
+  const [inputValue, setInputValue] = useState('');
 
   const loginButtonDisabled = inputValue.trim().length === 0;
 
@@ -16,7 +16,7 @@ export function Login({ onLogin }:any) {
       <button
         disabled={loginButtonDisabled}
         className="button"
-        onClick={() => onLogin(inputValue)}
+        onClick={() => onLogin({ nickname: inputValue, id: 1 })}
       >
         Login
       </button>
